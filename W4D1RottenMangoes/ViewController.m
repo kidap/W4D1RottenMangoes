@@ -115,24 +115,29 @@ static NSInteger movieCountPerPage = 50;
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
       if (!error){
         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:1 error:nil];
-        NSArray *movieList = jsonData[@"movies"];
-        for (NSDictionary *movie in movieList){
-          NSLog(@"%@",movie);
-          //Add movie to array that will be displayed
-          [self.moviesArray addObject:[[Movie alloc] initWithDictionary:movie]];
-          
-          //Store indexPath that will be inserted
-          NSInteger itemNo = (NSInteger)self.moviesArray.count - 1;
-          [self.indexPathArrayToBeAdded addObject:[NSIndexPath indexPathForItem:itemNo inSection:0]];
+        if (!jsonData[@"error"]){
+          NSArray *movieList = jsonData[@"movies"];
+          for (NSDictionary *movie in movieList){
+            NSLog(@"%@",movie);
+            //Add movie to array that will be displayed
+            [self.moviesArray addObject:[[Movie alloc] initWithDictionary:movie]];
+            
+            //Store indexPath that will be inserted
+            NSInteger itemNo = (NSInteger)self.moviesArray.count - 1;
+            [self.indexPathArrayToBeAdded addObject:[NSIndexPath indexPathForItem:itemNo inSection:0]];
+          }
+          //Reload Collection View
+          dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"%lu",(unsigned long)self.moviesArray.count);
+            [self.collectionView insertItemsAtIndexPaths:self.indexPathArrayToBeAdded];
+            self.isTaskCompleted = YES;
+            [self.activityIndicator stopAnimating];
+          });
+        } else{
+          [self displayAlertWithMessage:jsonData[@"error"]];
         }
-        //Reload Collection View
-        dispatch_async(dispatch_get_main_queue(), ^{
-          NSLog(@"%lu",(unsigned long)self.moviesArray.count);
-          [self.collectionView insertItemsAtIndexPaths:self.indexPathArrayToBeAdded];
-          self.isTaskCompleted = YES;
-          [self.activityIndicator stopAnimating];
-        });
       } else{
+        [self displayAlertWithMessage:error.localizedDescription];
         NSLog(@"Error:%@",error);
       }
     }];
@@ -149,6 +154,16 @@ static NSInteger movieCountPerPage = 50;
   [self.collectionView addSubview:self.activityIndicator];
   [self.activityIndicator startAnimating];
 }
+-(void)displayAlertWithMessage:(NSString *)error{
+  UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:error preferredStyle:UIAlertControllerStyleAlert];
+  UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    [self dismissViewControllerAnimated:YES completion:nil];
+  }];
+  [alertController addAction:okAction];
+  
+  [self presentViewController:alertController animated:YES completion:nil];
+}
+
 
 //No need to use this. task can be started in the cellForItemAtIndexPath
 //-(void)collectionView:(UICollectionView *)collectionView willDisplayCell:(CustomCollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
