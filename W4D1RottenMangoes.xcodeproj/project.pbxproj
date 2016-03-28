@@ -15,6 +15,7 @@
 		A770A8801CA9965400D1C669 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A770A87E1CA9965400D1C669 /* LaunchScreen.storyboard */; };
 		A770A88C1CA996A700D1C669 /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = A770A88B1CA996A700D1C669 /* Movie.m */; };
 		A770A88F1CA9991700D1C669 /* CustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A770A88E1CA9991700D1C669 /* CustomCollectionViewCell.m */; };
+		A770A8921CA9B4A700D1C669 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A770A8911CA9B4A700D1C669 /* WebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		A770A88B1CA996A700D1C669 /* Movie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Movie.m; sourceTree = "<group>"; };
 		A770A88D1CA9991700D1C669 /* CustomCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewCell.h; sourceTree = "<group>"; };
 		A770A88E1CA9991700D1C669 /* CustomCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewCell.m; sourceTree = "<group>"; };
+		A770A8901CA9B4A700D1C669 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		A770A8911CA9B4A700D1C669 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +94,8 @@
 			children = (
 				A770A8761CA9965400D1C669 /* ViewController.h */,
 				A770A8771CA9965400D1C669 /* ViewController.m */,
+				A770A8901CA9B4A700D1C669 /* WebViewController.h */,
+				A770A8911CA9B4A700D1C669 /* WebViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -185,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A770A8781CA9965400D1C669 /* ViewController.m in Sources */,
+				A770A8921CA9B4A700D1C669 /* WebViewController.m in Sources */,
 				A770A8751CA9965400D1C669 /* AppDelegate.m in Sources */,
 				A770A88C1CA996A700D1C669 /* Movie.m in Sources */,
 				A770A8721CA9965400D1C669 /* main.m in Sources */,

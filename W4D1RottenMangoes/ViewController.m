@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "Movie.h"
 #import "CustomCollectionViewCell.h"
+#import "WebViewController.h"
 static NSInteger totalMovieCount = 50;
 
 @interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
@@ -96,6 +97,15 @@ static NSInteger totalMovieCount = 50;
   NSLog(@"Displaying movie: %@", movie.title);
   return cell;
 
+}
+
+//MARK: Navigation
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+  if ([segue.identifier isEqualToString:@"showAlternateLink"]){
+    WebViewController *destination = segue.destinationViewController;
+    NSInteger selectedIndex = self.collectionView.indexPathsForSelectedItems[0].row;
+    destination.urlString = self.moviesArray[selectedIndex].alternateLink;
+  }
 }
 
 //No need to use this. task can be started in the cellForItemAtIndexPath
