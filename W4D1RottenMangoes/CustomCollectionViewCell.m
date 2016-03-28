@@ -10,4 +10,9 @@
 
 @implementation CustomCollectionViewCell
 
+-(void)prepareForReuse{
+  [self.dataTask cancel];
+  //Images can also be cleared here
+}
+
 @end

@@ -13,11 +13,15 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *year;
 @property (nonatomic, copy) NSString *rating;
+@property (nonatomic, copy) NSString *alternateLink;
 @property (nonatomic, copy) NSString *originalPosterURL;
 
 -(instancetype) initWithTitle:(NSString *)title
                       movieID:(NSString *)movieID
                          year:(NSString *)year
                        rating:(NSString *)rating
+                         link:(NSString *)alternateLink
             originalPosterURL:(NSString *)originalPosterURL;
+
+-(instancetype) initWithDictionary:(NSDictionary *)movieDetails;
 @end
