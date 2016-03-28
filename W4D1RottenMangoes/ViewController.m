@@ -10,11 +10,15 @@
 #import "Movie.h"
 #import "CustomCollectionViewCell.h"
 #import "WebViewController.h"
-static NSInteger totalMovieCount = 50;
+static NSInteger movieCountPerPage = 50;
 
-@interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic,strong) NSMutableArray<Movie *> *moviesArray;
+@property (nonatomic,assign) NSInteger lastPageDownloaded;
+@property (nonatomic,strong) NSMutableArray *indexPathArrayToBeAdded;
+@property (nonatomic,strong) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic,assign) bool isTaskCompleted;
 @end
 
 @implementation ViewController
@@ -28,43 +32,14 @@ static NSInteger totalMovieCount = 50;
 }
 -(void)prepareData{
   self.moviesArray = [[NSMutableArray alloc] init];
-  
-  NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=h8ym7ry7kkur36j7ku482y9z&page_limit=50"]] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-    if (!error){
-      NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:1 error:nil];
-      NSArray *movieList = jsonData[@"movies"];
-      for (NSDictionary *movie in movieList){
-        NSLog(@"%@",movie);
-        
-        [self.moviesArray addObject:[[Movie alloc] initWithDictionary:movie]];
-        
-//        NSDictionary *ratings = movie[@"ratings"];
-//        NSDictionary *posters = movie[@"posters"];
-//        NSNumber *linkes = ratings[@"links"];
-//        NSNumber *rating = ratings[@"critics_score"];
-//        NSNumber *year = movie[@"year"];
-//        
-//        [self.moviesArray addObject:[[Movie alloc] initWithTitle:movie[@"title"]
-//                                                         movieID:movie[@"id"]
-//                                                            year:[year stringValue]
-//                                                          rating:[rating stringValue]
-//                                               originalPosterURL:posters[@"original"]]];
-      }
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [self.collectionView reloadData];
-      });
-    } else{
-      NSLog(@"Error:%@",error);
-    }
-  }];
-  
-  [task resume];
+  self.lastPageDownloaded = 1;
+  self.isTaskCompleted = YES;
+  [self getMovieWithPage:self.lastPageDownloaded];
   
 }
 -(void)prepareCollectionView{
   self.collectionView.delegate = self;
   self.collectionView.dataSource = self;
-  self.collectionView.backgroundColor = [UIColor whiteColor];
 }
 //MARK: UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -93,10 +68,22 @@ static NSInteger totalMovieCount = 50;
   }];
   cell.dataTask = task;
   [cell.dataTask resume];
-
+  
   NSLog(@"Displaying movie: %@", movie.title);
   return cell;
+  
+}
 
+//MARK: Scrolling
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+  //NSLog(@"Scrolling");
+  NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:self.moviesArray.count -1 inSection:0];
+  if([self.collectionView.indexPathsForVisibleItems containsObject:lastIndexPath]){
+    NSLog(@"END of the list");
+    
+    self.lastPageDownloaded++;
+    [self getMovieWithPage:self.lastPageDownloaded];
+  }
 }
 
 //MARK: Navigation
@@ -106,6 +93,61 @@ static NSInteger totalMovieCount = 50;
     NSInteger selectedIndex = self.collectionView.indexPathsForSelectedItems[0].row;
     destination.urlString = self.moviesArray[selectedIndex].alternateLink;
   }
+}
+
+//MARK: Helper
+-(void)getMovieWithPage:(NSInteger)pageNumber{
+  
+  //Check if the task is already running
+  if (self.isTaskCompleted){
+    //Refresh array
+    self.indexPathArrayToBeAdded = [NSMutableArray array];
+    
+    //Display activity indicator
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self displayActivityIndicator];
+    });
+    
+    //Build URL
+    NSString *urlString = [NSString stringWithFormat:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=h8ym7ry7kkur36j7ku482y9z&page=%ld&page_limit=%ld",self.lastPageDownloaded,movieCountPerPage];
+    
+    //Get JSON data
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      if (!error){
+        NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:1 error:nil];
+        NSArray *movieList = jsonData[@"movies"];
+        for (NSDictionary *movie in movieList){
+          NSLog(@"%@",movie);
+          //Add movie to array that will be displayed
+          [self.moviesArray addObject:[[Movie alloc] initWithDictionary:movie]];
+          
+          //Store indexPath that will be inserted
+          NSInteger itemNo = (NSInteger)self.moviesArray.count - 1;
+          [self.indexPathArrayToBeAdded addObject:[NSIndexPath indexPathForItem:itemNo inSection:0]];
+        }
+        //Reload Collection View
+        dispatch_async(dispatch_get_main_queue(), ^{
+          NSLog(@"%lu",(unsigned long)self.moviesArray.count);
+          [self.collectionView insertItemsAtIndexPaths:self.indexPathArrayToBeAdded];
+          self.isTaskCompleted = YES;
+          [self.activityIndicator stopAnimating];
+        });
+      } else{
+        NSLog(@"Error:%@",error);
+      }
+    }];
+    
+    [task resume];
+    self.isTaskCompleted = NO;
+  }
+}
+-(void)displayActivityIndicator{
+  self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  [self.activityIndicator setCenter:self.view.center];
+  [self.activityIndicator setHidesWhenStopped:YES];
+  
+  [self.collectionView addSubview:self.activityIndicator];
+  [self.activityIndicator startAnimating];
 }
 
 //No need to use this. task can be started in the cellForItemAtIndexPath

@@ -13,6 +13,8 @@
 -(void)prepareForReuse{
   [self.dataTask cancel];
   //Images can also be cleared here
+  [self.imageView setImage:nil];
 }
+
 
 @end
