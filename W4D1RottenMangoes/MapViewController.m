@@ -79,8 +79,6 @@
     }
     self.lastPlacemark = currentPlacemark;
   }];
-  
-  
 }
 
 //MARK: Table view delegate and datasource
@@ -131,20 +129,29 @@
   [self getTheatresInPostalCode:postalCode showingMovie:self.movie.title placemark:nil];
 }
 -(void)getTheatresInPostalCode:(NSString *)postalCode showingMovie:(NSString *)title placemark:(CLPlacemark *)placemark{
-  NSString *urlString = [NSString stringWithFormat:@"http://lighthouse-movie-showtimes.herokuapp.com/theatres.json?address=%@&movie=%@",postalCode, self.movie.title];
-  urlString = [urlString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-  NSLog(@"%@",urlString);
-  
   //Clear annotations and tables
   [self.theatresArray removeAllObjects];
   [self.mapView removeAnnotations:self.mapView.annotations];
   
-  //Get location of the postal code if placemark was not provided
+  //Prepare URL string
+  NSString *urlString = [NSString stringWithFormat:@"http://lighthouse-movie-showtimes.herokuapp.com/theatres.json?address=%@&movie=%@",postalCode, self.movie.title];
+  urlString = [urlString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+  NSLog(@"%@",urlString);
+  
+  //Get location of the postal code if placemark was not provided. Else, use the provided placemark
   if (!placemark){
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:postalCode inRegion:nil completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-      self.lastPlacemark = [[CLPlacemark alloc] initWithPlacemark:[placemarks firstObject]];
-      [self getTheatresUsingURLString:urlString];
+      if(placemarks.count != 0){
+        self.lastPlacemark = [[CLPlacemark alloc] initWithPlacemark:[placemarks firstObject]];
+        [self getTheatresUsingURLString:urlString];
+      } else{
+        //Display error message is the postal code is invalid
+        UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                            message:@"Postal code is invalid." preferredStyle:UIAlertControllerStyleAlert];
+        [errorAlert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:errorAlert animated:YES completion:nil];
+      }
     }];
   } else {
     self.lastPlacemark = placemark;
