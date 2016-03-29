@@ -91,7 +91,8 @@ static NSInteger movieCountPerPage = 50;
   if ([segue.identifier isEqualToString:@"showAlternateLink"]){
     WebViewController *destination = segue.destinationViewController;
     NSInteger selectedIndex = self.collectionView.indexPathsForSelectedItems[0].row;
-    destination.urlString = self.moviesArray[selectedIndex].alternateLink;
+//    destination.urlString = self.moviesArray[selectedIndex].alternateLink;
+    destination.movie = self.moviesArray[selectedIndex];
   }
 }
 

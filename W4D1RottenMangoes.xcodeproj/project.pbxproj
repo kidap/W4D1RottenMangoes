@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A734CBD11CAAD3660021C795 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A734CBD01CAAD3660021C795 /* MapViewController.m */; };
+		A734CBD31CAAD3E90021C795 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A734CBD21CAAD3E90021C795 /* MapKit.framework */; };
+		A734CBD51CAAD3FE0021C795 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A734CBD41CAAD3FE0021C795 /* CoreLocation.framework */; };
+		A734CBD81CAADD110021C795 /* Theatre.m in Sources */ = {isa = PBXBuildFile; fileRef = A734CBD71CAADD110021C795 /* Theatre.m */; };
 		A770A8721CA9965400D1C669 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A770A8711CA9965400D1C669 /* main.m */; };
 		A770A8751CA9965400D1C669 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A770A8741CA9965400D1C669 /* AppDelegate.m */; };
 		A770A8781CA9965400D1C669 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A770A8771CA9965400D1C669 /* ViewController.m */; };
@@ -19,6 +23,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A734CBCF1CAAD3660021C795 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		A734CBD01CAAD3660021C795 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		A734CBD21CAAD3E90021C795 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A734CBD41CAAD3FE0021C795 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A734CBD61CAADD110021C795 /* Theatre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Theatre.h; sourceTree = "<group>"; };
+		A734CBD71CAADD110021C795 /* Theatre.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Theatre.m; sourceTree = "<group>"; };
 		A770A86D1CA9965400D1C669 /* W4D1RottenMangoes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = W4D1RottenMangoes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A770A8711CA9965400D1C669 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A770A8731CA9965400D1C669 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -42,6 +52,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A734CBD51CAAD3FE0021C795 /* CoreLocation.framework in Frameworks */,
+				A734CBD31CAAD3E90021C795 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +63,8 @@
 		A770A8641CA9965400D1C669 = {
 			isa = PBXGroup;
 			children = (
+				A734CBD41CAAD3FE0021C795 /* CoreLocation.framework */,
+				A734CBD21CAAD3E90021C795 /* MapKit.framework */,
 				A770A86F1CA9965400D1C669 /* W4D1RottenMangoes */,
 				A770A86E1CA9965400D1C669 /* Products */,
 			);
@@ -96,6 +110,8 @@
 				A770A8771CA9965400D1C669 /* ViewController.m */,
 				A770A8901CA9B4A700D1C669 /* WebViewController.h */,
 				A770A8911CA9B4A700D1C669 /* WebViewController.m */,
+				A734CBCF1CAAD3660021C795 /* MapViewController.h */,
+				A734CBD01CAAD3660021C795 /* MapViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -105,6 +121,8 @@
 			children = (
 				A770A88A1CA996A700D1C669 /* Movie.h */,
 				A770A88B1CA996A700D1C669 /* Movie.m */,
+				A734CBD61CAADD110021C795 /* Theatre.h */,
+				A734CBD71CAADD110021C795 /* Theatre.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -150,6 +168,11 @@
 					A770A86C1CA9965400D1C669 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = DA62YQ6NQN;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -190,11 +213,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A770A8781CA9965400D1C669 /* ViewController.m in Sources */,
+				A734CBD81CAADD110021C795 /* Theatre.m in Sources */,
 				A770A8921CA9B4A700D1C669 /* WebViewController.m in Sources */,
 				A770A8751CA9965400D1C669 /* AppDelegate.m in Sources */,
 				A770A88C1CA996A700D1C669 /* Movie.m in Sources */,
 				A770A8721CA9965400D1C669 /* main.m in Sources */,
 				A770A88F1CA9991700D1C669 /* CustomCollectionViewCell.m in Sources */,
+				A734CBD11CAAD3660021C795 /* MapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +370,7 @@
 				A770A8861CA9965400D1C669 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

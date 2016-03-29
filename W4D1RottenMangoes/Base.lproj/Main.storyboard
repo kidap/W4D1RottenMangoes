@@ -16,12 +16,12 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FzD-y9-Cau">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FzD-y9-Cau">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ttb-Dl-G71">
                                     <size key="itemSize" width="405" height="227"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -30,7 +30,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="movieCell" id="kAW-w3-8wg" customClass="CustomCollectionViewCell">
-                                        <rect key="frame" x="98" y="0.0" width="405" height="227"/>
+                                        <rect key="frame" x="97.5" y="0.0" width="405" height="227"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="405" height="227"/>
@@ -114,10 +114,10 @@
                         <viewControllerLayoutGuide type="bottom" id="WiG-mz-1fn"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="PRl-2t-xqo">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kBJ-uv-NJO">
+                            <webView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kBJ-uv-NJO">
                                 <rect key="frame" x="20" y="64" width="560" height="536"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
                             </webView>
@@ -132,21 +132,54 @@
                     </view>
                     <connections>
                         <outlet property="webView" destination="kBJ-uv-NJO" id="741-tU-usi"/>
+                        <segue destination="Fqh-Nd-fxU" kind="show" identifier="showTheatresNearby" id="pNj-ld-g2a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sbL-EF-acS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1629" y="367"/>
         </scene>
+        <!--Map View Controller-->
+        <scene sceneID="IsJ-fX-12a">
+            <objects>
+                <viewController id="Fqh-Nd-fxU" customClass="MapViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0Rv-lJ-auo"/>
+                        <viewControllerLayoutGuide type="bottom" id="RZg-8L-rWV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="R4I-QZ-Eq2">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="IOe-kb-fOa">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IOe-kb-fOa" firstAttribute="leading" secondItem="R4I-QZ-Eq2" secondAttribute="leading" id="nEE-fr-LIA"/>
+                            <constraint firstAttribute="trailing" secondItem="IOe-kb-fOa" secondAttribute="trailing" id="poV-bn-sJK"/>
+                            <constraint firstItem="RZg-8L-rWV" firstAttribute="top" secondItem="IOe-kb-fOa" secondAttribute="bottom" id="t5F-EE-mjg"/>
+                            <constraint firstItem="IOe-kb-fOa" firstAttribute="top" secondItem="0Rv-lJ-auo" secondAttribute="bottom" id="z1R-VO-Aar"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="IOe-kb-fOa" id="p4N-ph-SRr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Ox-XF-GXn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2301" y="367"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="0H0-wc-dty">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TcH-Tv-xVX" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KCt-mQ-ujR">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="KCt-mQ-ujR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.16079631259999999" green="0.3155248397" blue="0.0060677853800000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.13425480769230769" green="0.13425480769230769" blue="0.13425480769230769" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
