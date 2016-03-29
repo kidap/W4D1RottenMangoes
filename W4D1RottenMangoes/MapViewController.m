@@ -92,6 +92,13 @@
   return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+  
+  MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:self.theatresArray[indexPath.row].coordinate
+                                                                                  addressDictionary:nil]];
+  mapItem.name = self.theatresArray[indexPath.row].name;
+  [mapItem openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking}];
+}
 //MARK: Action
 -(void)changePostalCode:(id)sender{
   
