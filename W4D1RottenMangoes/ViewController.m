@@ -119,7 +119,7 @@ static NSInteger movieCountPerPage = 50;
         if (!jsonData[@"error"]){
           NSArray *movieList = jsonData[@"movies"];
           for (NSDictionary *movie in movieList){
-            NSLog(@"%@",movie);
+//            NSLog(@"%@",movie);
             //Add movie to array that will be displayed
             [self.moviesArray addObject:[[Movie alloc] initWithDictionary:movie]];
             

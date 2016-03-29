@@ -12,12 +12,11 @@
 @interface Theatre : NSObject
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *address;
-@property (nonatomic, assign) CLLocationDegrees lat;
-@property (nonatomic, assign) CLLocationDegrees lng;
+@property (nonatomic, assign) CLLocationCoordinate2D coordinate;
+@property (nonatomic, assign) CLLocationDistance distanceFromUser;
 
 -(instancetype)initWithDict:(NSDictionary *) dict;
 -(instancetype)initWithName:(NSString *)name
                     address:(NSString *)address
-                        lat:(CLLocationDegrees)lat
-                        lng:(CLLocationDegrees)lng;
+                 coordinate:(CLLocationCoordinate2D)coordinate;
 @end

@@ -9,25 +9,25 @@
 
 #import "Theatre.h"
 
+
 @implementation Theatre
 -(instancetype)initWithDict:(NSDictionary *) dict{
   NSNumber *lat = dict[@"lat"];
   NSNumber *lng = dict[@"lng"];
+  CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([lat doubleValue], [lng doubleValue]);
 
   return [self initWithName:dict[@"name"]
                     address:dict[@"address"]
-                        lat:[lat doubleValue]
-                        lng:[lng doubleValue]];
+                        coordinate:coordinate];
 }
 -(instancetype)initWithName:(NSString *)name
                     address:(NSString *)address
-                        lat:(CLLocationDegrees)lat
-                        lng:(CLLocationDegrees)lng{
+                 coordinate:(CLLocationCoordinate2D)coordinate{
   if (self = [super init]){
     _name = name;
     _address = address;
-    _lat = lat;
-    _lng = lng;
+    _coordinate = coordinate;
+    _distanceFromUser = 0;
   }
   return self;
 }
