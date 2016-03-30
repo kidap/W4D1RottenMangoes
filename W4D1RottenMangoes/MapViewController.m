@@ -79,6 +79,8 @@
     }
     self.lastPlacemark = currentPlacemark;
   }];
+  
+  NSLog(@"didUpdateUserLocation called");
 }
 
 //MARK: Table view delegate and datasource

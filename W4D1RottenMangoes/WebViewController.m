@@ -10,9 +10,9 @@
 #import "Movie.h"
 #import "MapViewController.h"
 
-@interface WebViewController()
+@interface WebViewController()<UIWebViewDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
-
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @end
 @implementation WebViewController
 -(void)viewDidLoad{
@@ -29,10 +29,19 @@
 -(void)prepareWebView{
   NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.movie.alternateLink]];
   [self.webView loadRequest:request];
+  self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  [self.activityIndicator startAnimating];
+  self.activityIndicator.center = self.view.center;
+  [self.webView addSubview:self.activityIndicator];
 }
+//MARK: WebView delegate
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+  [self.activityIndicator stopAnimating];
+}
+
 //MARK: Action
 -(void)showTheatersNearby:(id)sender{
- //Trigger segue
+  //Trigger segue
   [self performSegueWithIdentifier:@"showTheatresNearby" sender:self];
 }
 //MARK: Navigation
