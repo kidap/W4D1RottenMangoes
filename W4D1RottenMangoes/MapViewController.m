@@ -99,7 +99,12 @@
   MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:self.theatresArray[indexPath.row].coordinate
                                                                                   addressDictionary:nil]];
   mapItem.name = self.theatresArray[indexPath.row].name;
-  [mapItem openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking}];
+  //Change mode from driving to walking based on the distance
+  if(self.theatresArray[indexPath.row].distanceFromUser >5){
+    [mapItem openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving}];
+  } else{
+    [mapItem openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeWalking}];
+  }
 }
 //MARK: Action
 -(void)changePostalCode:(id)sender{
