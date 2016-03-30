@@ -31,4 +31,13 @@
   }
   return self;
 }
+
+
+-(BOOL)isEqual:(Theatre *)object{
+  if ([self.name isEqualToString:object.name]){
+    return YES;
+  } else {
+    return NO;
+  }
+}
 @end

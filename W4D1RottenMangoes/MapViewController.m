@@ -193,7 +193,9 @@
         newTheatre.distanceFromUser = distance;
         
         //Add theater to array
-        [self.theatresArray addObject:newTheatre];
+        if (![self.theatresArray containsObject:newTheatre]){
+          [self.theatresArray addObject:newTheatre];
+        }
         
         NSLog(@"Theatres: %@",theatre);
       }
